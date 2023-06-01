@@ -1,45 +1,31 @@
 package com.example.songsappYOTPO.singer;
 
+import com.example.songsappYOTPO.shared.Person;
 import com.example.songsappYOTPO.song.Song;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Singer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String firstName;
-    private String lastName;
+public class Singer extends Person {
+
     @ManyToMany(mappedBy = "singers")
+    @Builder.Default
     private List<Song> songs = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+//    public Singer(Long id, String firstName, String lastName) {
+//        super(id, firstName, lastName);
+//    }
 
     public List<Song> getSongs() {
         return songs;
@@ -49,14 +35,5 @@ public class Singer {
         this.songs = songs;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Singer singer = (Singer) o;
-
-        return Objects.equals(id, singer.id);
-    }
 
 }
