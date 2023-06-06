@@ -3,10 +3,7 @@ package com.example.songsappYOTPO.song;
 import com.example.songsappYOTPO.producer.Producer;
 import com.example.songsappYOTPO.singer.Singer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 public class Song {
