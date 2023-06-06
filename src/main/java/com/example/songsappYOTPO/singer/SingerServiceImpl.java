@@ -18,6 +18,11 @@ public class SingerServiceImpl implements SingerService {
     }
 
     @Override
+    public List<Singer> saveSingers(List<Singer> singers) {
+        return singerRepository.saveAll(singers);
+    }
+
+    @Override
     public void deleteById(Long id) {
         singerRepository.deleteById(id);
     }
