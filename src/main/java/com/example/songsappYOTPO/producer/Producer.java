@@ -18,9 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Producer extends Person {
+
+    //songs prop
     @OneToMany
     @JoinColumn(name = "producer_id") //instead of table, try without it and see
     @Builder.Default
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private List<Song> songs = new ArrayList<>();
 
     @Override

@@ -9,4 +9,5 @@ public interface ProducerService {
     void deleteById(Long id );
     Producer save(Producer producer);
     List<Producer> findByLastNameAndFirstNameAllIgnoreCase(String lastName, String firstName);
+    int updateProducer(Long id, Producer producer);
 }

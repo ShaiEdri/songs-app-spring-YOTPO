@@ -38,4 +38,9 @@ public class ProducerServiceImpl implements ProducerService {
         return producerRepository.findByLastNameAndFirstNameAllIgnoreCase(
                 lastName, firstName);
     }
+
+    @Override
+    public int updateProducer(Long id, Producer producer) {
+        return producerRepository.updateProducer(id, producer);
+    }
 }

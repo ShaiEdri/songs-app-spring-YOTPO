@@ -2,6 +2,8 @@ package com.example.songsappYOTPO.song;
 
 import com.example.songsappYOTPO.producer.Producer;
 import com.example.songsappYOTPO.singer.Singer;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,15 @@ public class Song {
     private Long id;
     private String name;
     private Double length;
+
+    //singers prop
     @ManyToMany
     @JoinTable(name = "singer_song", joinColumns = @JoinColumn(name = "song_id"),
             inverseJoinColumns = @JoinColumn(name = "singer_id"))
     @Builder.Default
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     private List<Singer> singers = new ArrayList<>();
 
     @ManyToOne
