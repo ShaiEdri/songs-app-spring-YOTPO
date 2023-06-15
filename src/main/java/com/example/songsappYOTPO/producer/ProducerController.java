@@ -1,12 +1,17 @@
 package com.example.songsappYOTPO.producer;
 
 import com.example.songsappYOTPO.shared.CustomResponse;
+import jakarta.validation.Valid;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/producer")
@@ -18,7 +23,7 @@ public class ProducerController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Producer> addProducer(@RequestBody Producer producer){
+    public ResponseEntity<Producer> addProducer(@Valid @RequestBody Producer producer){
         return new ResponseEntity<>(producerService.save(producer), HttpStatus.OK);
     }
 
@@ -62,15 +67,14 @@ public class ProducerController {
     }
 
     @PutMapping("/update2/{id}")//Option2 - Create a custom query, without Loading the object
-    public ResponseEntity<CustomResponse> updateProducerByIdNoLoadObject(@PathVariable Long id, @RequestBody Producer producer){
-        CustomResponse updateProducerResponse = new CustomResponse();
+    public ResponseEntity<CustomResponse<Producer>> updateProducerByIdNoLoadObject(@PathVariable Long id, @RequestBody Producer producer){
+        CustomResponse<Producer> updateProducerResponse = new CustomResponse();
+        updateProducerResponse.setData(producer);
         if (producerService.updateProducer(id, producer) == 1){
             updateProducerResponse.setMessage("Updated producer.id: " + id);
-            updateProducerResponse.setData(producer);
             return new ResponseEntity<>(updateProducerResponse, HttpStatus.OK);
         }
         updateProducerResponse.setMessage("Did not update producer.id: " + id);
-        updateProducerResponse.setData(producer);
         return new ResponseEntity<>(updateProducerResponse, HttpStatus.NOT_FOUND);
     }
 
@@ -80,6 +84,14 @@ public class ProducerController {
             return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<List<String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors().stream()
+                .map(ObjectError::getDefaultMessage)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
 }
 
 

@@ -9,8 +9,6 @@ public class SongsAppYotpoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SongsAppYotpoApplication.class, args);
-		Singer singer = new Singer();
-		System.out.println(singer);
 	}
 
 }

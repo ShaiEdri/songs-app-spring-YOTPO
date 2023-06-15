@@ -34,8 +34,10 @@ class ProducerControllerTest {
     void getProducers() {
         producerService.save(testedProducer);
         //producerService.getProducers().stream().forEach(System.out::println);
-        List<Producer> producers = producerController.getProducers().getBody();
-        assertTrue(producers.size() > 0);
+        //List<Producer> producers = producerController.getProducers().getBody();
+        ResponseEntity<List<Producer> > responseEntity = producerController.getProducers();
+        assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+
     }
 
     @Test

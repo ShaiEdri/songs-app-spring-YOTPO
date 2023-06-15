@@ -11,6 +11,7 @@ import java.util.List;
 public interface ProducerRepository extends JpaRepository<Producer, Long> {
     List<Producer> findByLastNameAndFirstNameAllIgnoreCase(String lastName, String firstName);
 
+
     @Transactional
     @Modifying
     @Query("UPDATE Producer p SET p.firstName = :#{#producer.firstName}, " +

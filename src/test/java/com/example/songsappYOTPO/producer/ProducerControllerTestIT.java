@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProducerControllerTestIT {
     @MockBean
     private ProducerService producerService;
+
 
     @Autowired
     private MockMvc mockMvc;
@@ -61,8 +63,7 @@ class ProducerControllerTestIT {
                 .andReturn();
         String responseContent = result.getResponse().getContentAsString();
         List<Producer> producers = new ObjectMapper().readValue(responseContent,
-                new TypeReference<List<Producer>>() {
-                });
+                new TypeReference<List<Producer>>() {});
         assertEquals(producers.size(), 2);
         //assertNotEquals(producers.size(), 2);
     }
